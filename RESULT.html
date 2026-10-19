@@ -1,0 +1,1101 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SUNNY | 사이의 날씨</title>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+<style>
+
+/* ==========================================
+   01. GLOBAL
+========================================== */
+
+:root {
+  --cyan: #31e6ff;
+  --gray: #a9a9a9;
+  --black: #211f20;
+  --lime: #eff669;
+  --pink: #ff1ebe;
+  --white: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--black);
+
+  font-family:
+    "Space Grotesk",
+    "Noto Sans KR",
+    sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+
+  background:
+    radial-gradient(
+      ellipse 75% 58% at 78% 22%,
+      rgba(49,230,255,.92) 0%,
+      rgba(49,230,255,.45) 55%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 70% 50% at 12% 85%,
+      rgba(49,230,255,.7) 0%,
+      transparent 100%
+    ),
+    linear-gradient(
+      135deg,
+      #a9a9a9 0%,
+      #a7c4c9 52%,
+      #31e6ff 100%
+    );
+
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.mono {
+  font-family: "DM Mono", monospace;
+  font-size: 9px;
+  letter-spacing: .065em;
+  line-height: 1.8;
+}
+
+/* ==========================================
+   02. HEADER
+========================================== */
+
+.header {
+  height: 62px;
+  padding: 0 5%;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+
+  border-bottom: 1px solid var(--black);
+}
+
+.header a {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .035em;
+
+  transition: opacity .3s ease;
+}
+
+.header a:hover {
+  opacity: .45;
+}
+
+.header a:nth-child(2) {
+  text-align: center;
+}
+
+.header a:nth-child(3) {
+  text-align: right;
+}
+
+/* ==========================================
+   03. HERO
+========================================== */
+
+.hero {
+  min-height: 680px;
+  position: relative;
+
+  padding: 30px 5% 42px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  overflow: hidden;
+}
+
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+
+  position: relative;
+  z-index: 4;
+
+  pointer-events: none;
+}
+
+.hero-index {
+  line-height: 1.85;
+}
+
+/* ==========================================
+   04. SUN GRAPHIC
+   기존 크기 그대로 유지
+========================================== */
+
+.sun-graphic {
+  position: absolute;
+
+  width: min(53vw, 710px);
+  height: min(53vw, 710px);
+
+  left: 50%;
+  top: 45%;
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background: var(--lime);
+  border: 1px solid var(--black);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 1;
+
+  cursor: crosshair;
+  overflow: hidden;
+}
+
+.sun-inner {
+  width: 70%;
+  height: 70%;
+
+  transform: rotate(0deg);
+  will-change: transform;
+}
+
+.sun-inner svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ==========================================
+   05. HERO TYPOGRAPHY
+========================================== */
+
+.hero-center {
+  position: relative;
+  z-index: 2;
+
+  margin-top: 155px;
+
+  width: 100%;
+  text-align: left;
+
+  pointer-events: none;
+}
+
+.result-label {
+  display: inline-block;
+
+  margin-bottom: 20px;
+  padding: 6px 11px;
+
+  border: 1px solid var(--black);
+
+  font-family: "DM Mono", monospace;
+  font-size: 9px;
+  letter-spacing: .06em;
+}
+
+.hero-title {
+  margin: 0;
+
+  font-size: clamp(52px, 8.1vw, 118px);
+  font-weight: 700;
+
+  letter-spacing: -.078em;
+  line-height: 1.02;
+
+  color: var(--black);
+}
+
+.hero-title span {
+  display: block;
+
+  margin-top: 10px;
+
+  font-size: .88em;
+  letter-spacing: -.085em;
+
+  color: var(--white);
+
+  -webkit-text-stroke: 1.3px var(--black);
+  paint-order: stroke fill;
+}
+
+.hero-bottom {
+  position: relative;
+  z-index: 3;
+
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+
+  gap: 30px;
+  margin-top: 100px;
+
+  pointer-events: none;
+}
+
+.hero-description {
+  font-size: 12px;
+  font-weight: 400;
+
+  max-width: 370px;
+
+  line-height: 2;
+  letter-spacing: -.025em;
+
+  word-break: keep-all;
+}
+
+.hero-description b {
+  font-weight: 600;
+}
+
+.scroll-label {
+  text-align: right;
+  line-height: 1.85;
+}
+
+/* ==========================================
+   06. CORNER GRAPHICS
+========================================== */
+
+.corner-left,
+.corner-right {
+  position: absolute;
+
+  bottom: -100px;
+
+  width: 220px;
+  height: 220px;
+
+  border-top: 24px solid rgba(0,190,235,.55);
+
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.corner-left {
+  left: -150px;
+}
+
+.corner-right {
+  right: -150px;
+  transform: rotate(-45deg);
+}
+
+/* ==========================================
+   07. TICKER
+========================================== */
+
+.ticker {
+  background: var(--cyan);
+
+  overflow: hidden;
+
+  border-top: 1px solid var(--black);
+  border-bottom: 1px solid var(--black);
+
+  padding: 11px 0;
+}
+
+.ticker-track {
+  display: flex;
+  gap: 50px;
+
+  width: max-content;
+
+  animation: tickerMove 22s linear infinite;
+}
+
+.ticker-track span {
+  font-size: clamp(16px, 2.2vw, 27px);
+  font-weight: 700;
+
+  letter-spacing: -.045em;
+  white-space: nowrap;
+}
+
+@keyframes tickerMove {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ==========================================
+   08. COMMON SECTION
+========================================== */
+
+.section {
+  padding: 45px 5% 70px;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  border-bottom: 1px solid var(--black);
+  padding-bottom: 13px;
+}
+
+/* ==========================================
+   09. DEFINITION
+========================================== */
+
+.definition {
+  display: grid;
+  grid-template-columns: 28% 1fr;
+
+  gap: 5%;
+  padding-top: 45px;
+}
+
+.definition-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  gap: 16px;
+}
+
+.definition-symbol {
+  font-size: 48px;
+  font-weight: 700;
+
+  letter-spacing: -.07em;
+  line-height: 1;
+}
+
+.definition-title {
+  font-size: clamp(21px, 2.35vw, 32px);
+  font-weight: 700;
+
+  line-height: 1.45;
+  letter-spacing: -.055em;
+
+  margin: 0 0 28px;
+
+  word-break: keep-all;
+}
+
+.definition-text {
+  font-size: 12px;
+  font-weight: 400;
+
+  line-height: 2.1;
+  letter-spacing: -.018em;
+
+  max-width: 610px;
+  margin: 0;
+
+  word-break: keep-all;
+}
+
+.definition-end {
+  margin-top: 35px;
+  padding-top: 16px;
+
+  border-top: 1px solid var(--black);
+
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+/* ==========================================
+   10. MESSAGE
+========================================== */
+
+.message-section {
+  padding-top: 45px;
+  padding-bottom: 80px;
+}
+
+.message-layout {
+  display: grid;
+  grid-template-columns: 28% 1fr;
+
+  gap: 5%;
+  padding-top: 45px;
+}
+
+.message-left {
+  font-size: 10px;
+  line-height: 1.9;
+}
+
+.message-text {
+  margin: 0;
+
+  max-width: 760px;
+
+  font-size: clamp(21px, 2.5vw, 34px);
+  font-weight: 600;
+
+  line-height: 1.62;
+  letter-spacing: -.055em;
+
+  word-break: keep-all;
+}
+
+.message-text .accent {
+  color: var(--white);
+
+  text-shadow:
+    -1px -1px 0 var(--black),
+     1px -1px 0 var(--black),
+    -1px  1px 0 var(--black),
+     1px  1px 0 var(--black);
+}
+
+.message-english {
+  margin-top: 34px;
+  line-height: 1.9;
+}
+
+/* ==========================================
+   11. RECORD
+========================================== */
+
+.record {
+  background: var(--cyan);
+
+  border-top: 1px solid var(--black);
+
+  padding: 38px 5% 55px;
+}
+
+.record-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 28px;
+  margin-top: 38px;
+}
+
+.record-item {
+  border-top: 1px solid var(--black);
+  padding-top: 14px;
+}
+
+.record-value {
+  font-size: clamp(16px, 1.8vw, 24px);
+  font-weight: 600;
+
+  margin: 21px 0 13px;
+
+  letter-spacing: -.045em;
+}
+
+.record-note {
+  font-size: 10px;
+  line-height: 1.8;
+  letter-spacing: -.01em;
+}
+
+/* ==========================================
+   12. FOOTER
+========================================== */
+
+.footer {
+  background: var(--cyan);
+
+  padding: 20px 5% 26px;
+
+  display: flex;
+  justify-content: space-between;
+
+  border-top: 1px solid var(--black);
+
+  gap: 20px;
+}
+
+/* ==========================================
+   13. MOBILE
+========================================== */
+
+@media (max-width: 768px) {
+
+  .header {
+    height: 52px;
+  }
+
+  .header a {
+    font-size: 10px;
+  }
+
+  .hero {
+    min-height: 610px;
+  }
+
+  .sun-graphic {
+    width: 90vw;
+    height: 90vw;
+    top: 40%;
+  }
+
+  .hero-center {
+    margin-top: 210px;
+  }
+
+  .hero-title {
+    font-size: clamp(50px, 13vw, 82px);
+  }
+
+  .hero-bottom {
+    margin-top: 55px;
+  }
+
+  .hero-description {
+    font-size: 11px;
+    max-width: 270px;
+  }
+
+  .section {
+    padding: 35px 5% 55px;
+  }
+
+  .definition,
+  .message-layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .definition-symbol {
+    font-size: 38px;
+  }
+
+  .definition-title {
+    font-size: 23px;
+  }
+
+  .definition-text {
+    font-size: 12px;
+  }
+
+  .message-text {
+    font-size: 23px;
+  }
+
+  .record-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .footer {
+    flex-wrap: wrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ==========================================
+     HEADER
+========================================== -->
+
+<header class="header">
+
+  <a href="GENERATION.html">
+    GENERATION
+  </a>
+
+  <a href="../example02/합의보관소.html">
+    HOMEMAIN
+  </a>
+
+  <a href="SPACE.html">
+    SPACE
+  </a>
+
+</header>
+
+<main>
+
+<!-- ==========================================
+     HERO
+========================================== -->
+
+<section class="hero">
+
+  <div class="hero-top mono">
+
+    <div class="hero-index">
+      WEATHER BETWEEN US<br>
+      PERSONAL RESULT / 001
+    </div>
+
+    <div class="hero-index" style="text-align:right;">
+      37°33'58.87"N<br>
+      126°58'40.63"E
+    </div>
+
+  </div>
+
+  <!-- INTERACTIVE SUN -->
+
+  <div class="sun-graphic" id="interactiveSun">
+
+    <div class="sun-inner" id="sunInner">
+
+      <svg viewBox="0 0 500 500" fill="none">
+
+        <circle
+          cx="250"
+          cy="250"
+          r="100"
+          stroke="#ff1ebe"
+          stroke-width="10"
+        />
+
+        <g stroke="#ff1ebe" stroke-width="10">
+          <path d="M250 0V120"/>
+          <path d="M250 380V500"/>
+          <path d="M0 250H120"/>
+          <path d="M380 250H500"/>
+          <path d="M73 73L159 159"/>
+          <path d="M341 341L427 427"/>
+          <path d="M427 73L341 159"/>
+          <path d="M159 341L73 427"/>
+        </g>
+
+      </svg>
+
+    </div>
+
+  </div>
+
+  <!-- HERO TYPOGRAPHY -->
+
+  <div class="hero-center">
+
+    <div class="result-label">
+      01 / CLEAR
+    </div>
+
+    <h1 class="hero-title">
+      SUNNY
+      <span>맑음</span>
+    </h1>
+
+  </div>
+
+  <div class="hero-bottom">
+
+    <div class="hero-description">
+      서로를 있는 그대로 바라보는 관계.<br>
+
+      <b>
+        가까워지기 위해 경계를 없애는 것이 아니라,
+        서로의 경계를 바라보면서도
+        그 사이에 머무를 수 있습니다.
+      </b>
+    </div>
+
+    <div class="scroll-label mono">
+      EXPLORE THE RESULT<br>
+      SCROLL ↓
+    </div>
+
+  </div>
+
+  <div class="corner-left"></div>
+  <div class="corner-right"></div>
+
+</section>
+
+<!-- ==========================================
+     TICKER
+========================================== -->
+
+<div class="ticker">
+
+  <div class="ticker-track">
+
+    <span>
+      WEATHER BETWEEN US ✳ SUNNY ✳ CLEAR ✳
+    </span>
+
+    <span>
+      WEATHER BETWEEN US ✳ SUNNY ✳ CLEAR ✳
+    </span>
+
+  </div>
+
+</div>
+
+<!-- ==========================================
+     DEFINITION
+========================================== -->
+
+<section class="section">
+
+  <div class="section-heading mono">
+    <span>01 / DEFINITION</span>
+    <span>ABOUT SUNNY</span>
+  </div>
+
+  <div class="definition">
+
+    <div class="definition-left">
+
+      <div class="definition-symbol">
+        01 ↗
+      </div>
+
+      <div class="mono">
+        WEATHER TYPE<br>
+        CLEAR / SUNNY
+      </div>
+
+    </div>
+
+    <div class="definition-right">
+
+      <h2 class="definition-title">
+        맑음은 아무런 구름이<br>
+        없는 상태일까?
+      </h2>
+
+      <p class="definition-text">
+        맑음은 모든 불안과 갈등이 사라진 상태를
+        의미하지 않습니다. 서로 다른 생각과 감정이
+        존재하더라도, 그것을 가리지 않고 바라볼 수
+        있는 순간에 우리는 맑음을 경험합니다.
+
+        <br><br>
+
+        누군가를 이해한다는 것은 같은 날씨가 되는
+        일이 아닙니다. 서로의 온도와 속도가 다르다는
+        사실을 인정하면서도 그 사이에 머무르는 일입니다.
+        맑은 날씨는 서로를 바라보려는 작은 태도에서
+        시작됩니다.
+      </p>
+
+      <div class="definition-end mono">
+
+        <span>
+          VISIBILITY / CONNECTION
+        </span>
+
+        <span>
+          WEATHER 01 — 04
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ==========================================
+     MESSAGE
+========================================== -->
+
+<section class="section message-section">
+
+  <div class="section-heading mono">
+
+    <span>
+      02 / BETWEEN US
+    </span>
+
+    <span>
+      A MOMENT OF UNDERSTANDING
+    </span>
+
+  </div>
+
+  <div class="message-layout">
+
+    <div class="message-left mono">
+      FROM ONE WEATHER<br>
+      TO ANOTHER
+    </div>
+
+    <div>
+
+      <h2 class="message-text">
+
+        우리는 서로의 날씨를<br>
+        모두 알 수 없지만,<br>
+
+        <span class="accent">
+          잠시 멈춰 바라보는 순간
+        </span>
+
+        <br>
+        이해는 시작됩니다.
+
+      </h2>
+
+      <div class="message-english mono">
+        WE MAY NOT KNOW EACH OTHER'S WEATHER.<br>
+        BUT UNDERSTANDING BEGINS WHEN WE PAUSE TO LOOK.
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ==========================================
+     RECORD
+========================================== -->
+
+<section class="record">
+
+  <div class="section-heading mono">
+
+    <span>
+      03 / RECORD
+    </span>
+
+    <span>
+      PERSONAL WEATHER ARCHIVE
+    </span>
+
+  </div>
+
+  <div class="record-grid">
+
+    <div class="record-item">
+
+      <span class="mono">
+        WEATHER / 01
+      </span>
+
+      <div class="record-value">
+        SUNNY — 맑음
+      </div>
+
+      <div class="record-note">
+        서로의 다름을 바라볼 수 있는 날씨
+      </div>
+
+    </div>
+
+    <div class="record-item">
+
+      <span class="mono">
+        DATE / LOCAL TIME
+      </span>
+
+      <div class="record-value" id="current-date">
+        --.--.--
+      </div>
+
+      <div class="record-note mono" id="current-time">
+        --:--:-- KST
+      </div>
+
+    </div>
+
+    <div class="record-item">
+
+      <span class="mono">
+        REFERENCE / LOCATION
+      </span>
+
+      <div class="record-value">
+        SEOUL, KR
+      </div>
+
+      <div class="record-note mono">
+        37°33'58.87"N / 126°58'40.63"E
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+<!-- ==========================================
+     FOOTER
+========================================== -->
+
+<footer class="footer mono">
+
+  <span>
+    사이의 날씨 / WEATHER BETWEEN US
+  </span>
+
+  <span>
+    RESULT — 001
+  </span>
+
+</footer>
+
+<script>
+
+/* ==========================================
+   KOREA CLOCK
+========================================== */
+
+function updateClock() {
+
+  const now = new Date();
+
+  const date = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Seoul",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).format(now);
+
+  const time = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Seoul",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hourCycle: "h23"
+  }).format(now);
+
+  document.getElementById("current-date").textContent = date;
+  document.getElementById("current-time").textContent = time + " KST";
+
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+
+/* ==========================================
+   INTERACTIVE SUN ROTATION
+========================================== */
+
+const sun = document.getElementById("interactiveSun");
+const sunInner = document.getElementById("sunInner");
+
+const reduceMotion = window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
+);
+
+let angle = 0;
+let velocity = 360 / 26;
+let targetVelocity = 360 / 26;
+
+let hovering = false;
+let lastPointerX = null;
+let lastFrame = null;
+let lastMoveTime = 0;
+
+function animateSun(timestamp) {
+
+  if (lastFrame === null) {
+    lastFrame = timestamp;
+  }
+
+  const dt = Math.min(
+    (timestamp - lastFrame) / 1000,
+    0.05
+  );
+
+  lastFrame = timestamp;
+
+  if (!reduceMotion.matches) {
+
+    const pointerActive =
+      hovering && timestamp - lastMoveTime < 120;
+
+    targetVelocity = pointerActive
+      ? targetVelocity
+      : hovering ? 0 : 360 / 26;
+
+    const easing = 1 - Math.exp(-5 * dt);
+
+    velocity += (targetVelocity - velocity) * easing;
+    angle += velocity * dt;
+
+    sunInner.style.transform =
+      `rotate(${angle}deg)`;
+
+  }
+
+  requestAnimationFrame(animateSun);
+
+}
+
+sun.addEventListener("pointerenter", (event) => {
+
+  if (event.pointerType === "touch") return;
+
+  hovering = true;
+  lastPointerX = event.clientX;
+  targetVelocity = 0;
+
+});
+
+sun.addEventListener("pointermove", (event) => {
+
+  if (event.pointerType === "touch") return;
+  if (!hovering) return;
+
+  if (lastPointerX !== null) {
+
+    const dx = event.clientX - lastPointerX;
+
+    targetVelocity = Math.max(
+      -90,
+      Math.min(90, dx * 3)
+    );
+
+  }
+
+  lastPointerX = event.clientX;
+  lastMoveTime = performance.now();
+
+});
+
+sun.addEventListener("pointerleave", () => {
+
+  hovering = false;
+  lastPointerX = null;
+  targetVelocity = 360 / 26;
+
+});
+
+requestAnimationFrame(animateSun);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,245 @@
+
+/* ==================================
+   REFINED LAYOUT / SUNNY
+   왼쪽 정렬 + 자연스러운 그라데이션
+================================== */
+
+:root {
+  --bg: #a9a9a9;
+  --cyan: #31e6ff;
+  --pink: #000000;
+  --lime: #eff669;
+  --dark: #243b34;
+}
+
+/* 전체 배경 */
+
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: #243b34;
+
+  font-family:
+    "Space Grotesk",
+    "Noto Sans KR",
+    sans-serif;
+
+  background: linear-gradient(
+    135deg,
+    #a9a9a9 0%,
+    #a9bfc3 25%,
+    #9ed2dc 50%,
+    #6cdeec 75%,
+    #31e6ff 100%
+  );
+}
+
+/* 공통 그리드 */
+
+.site-header,
+.hero,
+.section,
+.site-footer {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+/* 상단 메뉴 */
+
+.site-header {
+  min-height: 54px;
+}
+
+.logo {
+  font-weight: 500;
+  font-size: 13px;
+}
+
+/* HERO — 태양 그래픽 그대로 유지 */
+
+.hero {
+  min-height: 650px;
+  align-items: stretch;
+}
+
+.sun-graphic {
+  width: min(53vw, 710px);
+  height: min(53vw, 710px);
+  left: 50%;
+  top: 45%;
+}
+
+/* 메인 타이포 — 왼쪽 정렬 */
+
+.hero-title {
+  width: 100%;
+  text-align: left;
+  margin-top: 170px;
+}
+
+.hero-title h1 {
+  font-size: clamp(55px, 10vw, 155px);
+  text-align: left;
+  margin-left: 0;
+  letter-spacing: -.075em;
+}
+
+.hero-title h2 {
+  font-size: clamp(45px, 8vw, 125px);
+  text-align: left;
+  margin-top: 12px;
+  margin-left: 0;
+  letter-spacing: -.075em;
+}
+
+/* 하단 설명 */
+
+.hero-bottom {
+  align-items: flex-end;
+  gap: 40px;
+  margin-top: 55px;
+}
+
+.hero-bottom p {
+  max-width: 450px;
+  font-size: 12px;
+  line-height: 1.85;
+  text-align: left;
+}
+
+.scroll-text {
+  margin-left: auto;
+  text-align: right;
+}
+
+/* 움직이는 글자 크기 */
+
+.ticker span {
+  font-size: clamp(18px, 2.5vw, 32px);
+}
+
+/* DEFINITION — 왼쪽 기준선 통일 */
+
+.section {
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+
+.definition-grid {
+  display: grid;
+  grid-template-columns: 22% 1fr;
+  column-gap: 6%;
+  padding-top: 38px;
+  align-items: start;
+}
+
+.section-number {
+  font-size: clamp(45px, 6vw, 75px);
+}
+
+.definition-title {
+  font-size: clamp(22px, 2.5vw, 34px);
+  line-height: 1.35;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.definition-text {
+  font-size: 12px;
+  max-width: 640px;
+  line-height: 1.85;
+  text-align: left;
+}
+
+.keyword-row {
+  margin-top: 25px;
+}
+
+/* MESSAGE — 동일한 기준선 */
+
+.message-section {
+  min-height: 300px;
+  align-items: stretch;
+}
+
+.message-text {
+  font-size: clamp(23px, 2.8vw, 39px);
+  max-width: 800px;
+  line-height: 1.5;
+  text-align: left;
+  margin: 35px 0;
+}
+
+/* ARCHIVE */
+
+.info-section {
+  background: #243b34;
+}
+
+.info-grid {
+  margin-top: 30px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.info-card strong {
+  font-size: clamp(17px, 1.8vw, 26px);
+}
+
+/* 모바일 */
+
+@media (max-width: 768px) {
+  .site-header,
+  .hero,
+  .section,
+  .site-footer {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .hero {
+    min-height: 610px;
+  }
+
+  .sun-graphic {
+    width: 90vw;
+    height: 90vw;
+    top: 40%;
+  }
+
+  .hero-title {
+    margin-top: 220px;
+  }
+
+  .hero-title h1 {
+    font-size: 17vw;
+    text-align: left;
+  }
+
+  .hero-title h2 {
+    font-size: 14vw;
+    text-align: left;
+  }
+
+  .hero-bottom {
+    margin-top: 55px;
+    gap: 15px;
+  }
+
+  .definition-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .definition-title {
+    font-size: 24px;
+  }
+
+  .message-text {
+    font-size: 24px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}
